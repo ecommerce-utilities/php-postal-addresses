@@ -241,11 +241,18 @@ class PhoneNumberCountryCodes {
 	];
 
 	/**
+	 * @return bool
+	 */
+	public function hasPhoneCountryCode($code) {
+		return in_array($code, $this->countryCodes);
+	}
+
+	/**
 	 * @param string $countryCode
 	 * @return string
 	 * @throws CountryCodeNotFoundException
 	 */
-	public function getPhoneCodeByCountryCode($countryCode) {
+	public function getPhoneCountryCodeByCountryCode($countryCode) {
 		if(array_key_exists($countryCode, $this->countryCodes)) {
 			return (string) $this->countryCodes[$countryCode];
 		}

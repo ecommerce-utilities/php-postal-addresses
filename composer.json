@@ -14,12 +14,12 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Kir\\MySQL\\": "src/"
+			"Kir\\CanonicalAddresses\\": "src/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Kir\\MySQL\\": ["src/", "tests/"]
+			"Kir\\CanonicalAddresses\\": ["src/", "tests/"]
 		}
 	}
 }

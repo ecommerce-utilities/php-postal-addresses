@@ -5,7 +5,7 @@ use Kir\CanonicalAddresses\PhoneNumbers\PhoneNumberCountryCodes\CountryCodeNotFo
 
 class PhoneNumberCountryCodes {
 	/** @var array */
-	private $countryCodes = [
+	private $countryCodes = array(
 		'AF' => '93',
 		'AL' => '355',
 		'DZ' => '213',
@@ -238,9 +238,10 @@ class PhoneNumberCountryCodes {
 		'YE' => '967',
 		'ZM' => '260',
 		'ZW' => '263',
-	];
+	);
 
 	/**
+	 * @param string $code
 	 * @return bool
 	 */
 	public function hasPhoneCountryCode($code) {

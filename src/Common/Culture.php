@@ -7,9 +7,9 @@ class Culture {
 	/** @var string */
 	private $countryCode;
 	/** @var array */
-	private $defaultLanguageCodeForCountryCode = [
+	private $defaultLanguageCodeForCountryCode = array(
 		'DE' => 'de',
-	];
+	);
 
 	/**
 	 * @param string $languageCode
@@ -35,5 +35,12 @@ class Culture {
 	 */
 	public function getCountryCode() {
 		return $this->countryCode;
+	}
+
+	/**
+	 * @return string
+	 */
+	function __toString() {
+		return sprintf('%s_%s', $this->languageCode, $this->countryCode);
 	}
 }

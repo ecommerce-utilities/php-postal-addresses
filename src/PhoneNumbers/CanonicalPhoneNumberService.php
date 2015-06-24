@@ -20,32 +20,21 @@ class CanonicalPhoneNumberService {
 	 * @return PhoneNumber
 	 */
 	public function getCanonicalPhoneNumber(Culture $culture, $phoneNumber) {
-		$countryId = $culture->getCountryCode();
 		$phoneNumber = trim($phoneNumber);
-		if($countryId === 'DE') {
-			$number = $phoneNumber;
-			list($countryCode, $number) = $this->extractPhoneCountryCode($countryId, $number);
-			return new PhoneNumber($countryCode, null, $number);
-		}
-		return new PhoneNumber(null, null, $phoneNumber);
+		$fn = $this->getParser($culture);
+		$pn = call_user_func($fn, $phoneNumber);
+		return $pn;
 	}
 
 	/**
-	 * @param string $countryId
-	 * @param string $phoneNumber
-	 * @return string
-	 * @throws PhoneNumberCountryCodes\CountryCodeNotFoundException
+	 * @param Culture $culture
+	 * @return array
 	 */
-	private function extractPhoneCountryCode($countryId, $phoneNumber) {
-		if(preg_match('/^(?:\\+\\s*|00)(\\d+)(.*)$/', $phoneNumber, $matches)) {
-			if($this->countryCodes->hasPhoneCountryCode($matches[1])) {
-				$number = trim($matches[2]);
-				$number = ltrim($number, '0');
-				return [sprintf('00%d', trim($matches[1])), $number];
-			}
+	private function getParser(Culture $culture) {
+		static $cache = array();
+		if(!array_key_exists((string) $culture, $cache)) {
+			$cache[(string) $culture] = require __DIR__."/parsers/{$culture}.php";
 		}
-		$areaCode = $this->countryCodes->getPhoneCountryCodeByCountryCode($countryId);
-		$phoneNumber = ltrim('0', $phoneNumber);
-		return [$areaCode, $phoneNumber];
+		return $cache[(string) $culture];
 	}
 }

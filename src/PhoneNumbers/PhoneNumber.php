@@ -45,6 +45,9 @@ class PhoneNumber {
 	 * @return string
 	 */
 	public function __toString() {
-		return sprintf('%s%s%s', $this->countryCode, $this->areaCode, $this->number);
+		$trim = function ($number) {
+			return preg_replace('/[^0-9]/', '', $number);
+		};
+		return sprintf('+%s.%s.%s', $trim($this->countryCode), $trim($this->areaCode), $trim($this->number));
 	}
 }
